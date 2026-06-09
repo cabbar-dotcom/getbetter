@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YKS Hazırlık Planı</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap');
+
+  :root {
+    --bg: #0c0c0f;
+    --surface: #141418;
+    --surface2: #1c1c22;
+    --surface3: #222228;
+    --accent: #d4a853;
+    --accent2: #5b9bd5;
+    --accent3: #5bc49a;
+    --danger: #d55b5b;
+    --text: #e8e4dc;
+    --muted: #777;
+    --border: #252528;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    padding: 0 0 80px;
+  }
+
+  /* TOP NAV */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #0c0c0fee;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+  }
+
+  .topnav-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--accent);
+  }
+
+  .tab-group {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .tab-btn {
+    padding: 8px 22px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-right: 1px solid var(--border);
+  }
+
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn.active { background: var(--accent); color: #0c0c0f; font-weight: 700; }
+
+  /* MAIN */
+  .main { max-width: 820px; margin: 0 auto; padding: 40px 24px; }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* HERO */
+  .hero {
+    border-left: 3px solid var(--accent);
+    padding-left: 24px;
+    margin-bottom: 48px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .hero p { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+
+  /* PHASE */
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .phase-header:hover { background: var(--surface2); }
+
+  .phase-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .okul .phase-badge { background: #5b9bd511; color: var(--accent2); border: 1px solid #5b9bd533; }
+  .faz1 .phase-badge { background: #d55b5b11; color: var(--danger); border: 1px solid #d55b5b33; }
+  .faz2 .phase-badge { background: #d4a85311; color: var(--accent); border: 1px solid #d4a85333; }
+  .faz3 .phase-badge { background: #5bc49a11; color: var(--accent3); border: 1px solid #5bc49a33; }
+  .faz4 .phase-badge { background: #a05bd511; color: #b07de8; border: 1px solid #a05bd533; }
+
+  .phase-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; flex: 1; }
+  .phase-meta { font-size: 0.78rem; color: var(--muted); }
+  .phase-chevron { color: var(--muted); font-size: 0.75rem; transition: transform 0.2s; }
+  .phase.open .phase-chevron { transform: rotate(180deg); }
+
+  .phase-body {
+    display: none;
+    padding: 0 22px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .phase.open .phase-body { display: block; }
+
+  /* SUBTITLE */
+  .sub { color: var(--muted); font-size: 0.85rem; margin: 16px 0 14px; }
+
+  /* WEEK BLOCK */
+  .week-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 22px 0 10px;
+  }
+
+  /* ITEMS */
+  .items { display: grid; gap: 8px; }
+
+  .item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-radius: 7px;
+    font-size: 0.9rem;
+  }
+
+  .item-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .item strong { color: var(--text); font-weight: 600; display: block; }
+  .item span { color: var(--muted); font-size: 0.83rem; }
+
+  /* SCHEDULE TABLE */
+  .sch {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.87rem;
+    margin-top: 10px;
+  }
+
+  .sch td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .sch tr:last-child td { border-bottom: none; }
+  .sch .t { color: var(--accent); font-weight: 600; white-space: nowrap; width: 120px; }
+  .sch .a { color: var(--text); }
+  .sch .n { color: var(--muted); font-size: 0.8rem; }
+  .sch tr.highlight td { background: #d4a85308; }
+
+  /* RULES */
+  .rules { display: grid; gap: 8px; margin-top: 10px; }
+
+  .rule {
+    padding: 11px 15px;
+    border-radius: 7px;
+    font-size: 0.88rem;
+    border-left: 3px solid;
+    line-height: 1.5;
+  }
+
+  .rule.r { background: #d55b5b0d; border-color: var(--danger); }
+  .rule.g { background: #d4a8530d; border-color: var(--accent); }
+  .rule.b { background: #5b9bd50d; border-color: var(--accent2); }
+  .rule.gr { background: #5bc49a0d; border-color: var(--accent3); }
+
+  /* CHECKLIST */
+  .checklist { display: grid; gap: 6px; margin-top: 10px; }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-radius: 7px;
+    font-size: 0.88rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .check-item:hover { background: var(--surface3); }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    transition: all 0.15s;
+  }
+
+  .check-item.checked .check-box {
+    background: var(--accent3);
+    border-color: var(--accent3);
+    color: #0c0c0f;
+  }
+
+  .check-item.checked .check-text { color: var(--muted); text-decoration: line-through; }
+
+  /* GOAL SUMMARY */
+  .goals {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+
+  .goal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+  }
+
+  .goal-row:last-child { border-bottom: none; }
+  .goal-row .gl { color: var(--muted); }
+  .goal-row .gv { color: var(--accent); font-weight: 600; font-family: 'Playfair Display', serif; }
+
+  /* ALERT */
+  .alert {
+    border-radius: 8px;
+    padding: 16px 18px;
+    font-size: 0.88rem;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  .alert.warn { background: #d55b5b0d; border: 1px solid #d55b5b33; color: #e8b0b0; }
+  .alert.info { background: #5b9bd50d; border: 1px solid #5b9bd533; color: #a8c8e8; }
+  .alert strong { display: block; margin-bottom: 6px; }
+
+  /* SECTION TITLE */
+  .stitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin: 44px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* PROGRESS BAR */
+  .prog-row { margin: 6px 0; }
+  .prog-label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--muted); margin-bottom: 4px; }
+  .prog-bar { height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 3px; background: var(--accent); }
+
+  /* PARENT CONTROL PANEL */
+  .control-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .control-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  /* DAILY RESET */
+  .reset-btn {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 20px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.15s;
+  }
+
+  .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* PHASE SELECTOR */
+  .phase-select {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .ps-btn {
+    padding: 7px 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .ps-btn.active { background: var(--accent); border-color: var(--accent); color: #0c0c0f; font-weight: 700; }
+
+  .checklist-section { display: none; }
+  .checklist-section.active { display: block; }
+
+  /* SAVE BUTTON */
+  .save-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px 24px;
+    background: var(--accent3);
+    border: none;
+    border-radius: 7px;
+    color: #0c0c0f;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.15s;
+  }
+  .save-btn:hover { opacity: 0.85; }
+  .save-notice {
+    display: inline-block;
+    margin-left: 12px;
+    font-size: 0.8rem;
+    color: var(--accent3);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .save-notice.show { opacity: 1; }
+
+  /* CALENDAR */
+  .cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .cal-nav-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 7px 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.15s;
+  }
+  .cal-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .cal-month-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--accent);
+  }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  .cal-day-label {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 6px 0;
+  }
+  .cal-cell {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    cursor: pointer;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    transition: all 0.15s;
+    position: relative;
+    gap: 2px;
+  }
+  .cal-cell:hover { border-color: var(--accent); }
+  .cal-cell.empty { background: transparent; border-color: transparent; cursor: default; }
+  .cal-cell.today { border-color: var(--accent); }
+  .cal-cell .cal-num { font-size: 0.88rem; line-height: 1; }
+  .cal-cell .cal-dots { display: flex; gap: 2px; }
+  .cal-cell .cal-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--muted);
+  }
+  .cal-cell.done-full { background: #5bc49a18; border-color: #5bc49a55; }
+  .cal-cell.done-full .cal-dot { background: var(--accent3); }
+  .cal-cell.done-partial { background: #d4a85318; border-color: #d4a85355; }
+  .cal-cell.done-partial .cal-dot { background: var(--accent); }
+  .cal-cell.done-none { background: #d55b5b10; border-color: #d55b5b33; }
+  .cal-cell.done-none .cal-dot { background: var(--danger); }
+
+  /* DAY DETAIL MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #0c0c0fcc;
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    max-width: 440px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .modal-close {
+    float: right;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: -4px;
+  }
+  .modal-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.87rem;
+  }
+  .modal-item:last-child { border-bottom: none; }
+  .modal-check { font-size: 1rem; flex-shrink: 0; }
+  .modal-note {
+    margin-top: 14px;
+    background: var(--surface2);
+    border-radius: 7px;
+    padding: 12px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .cal-legend {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .cal-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .cal-legend-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="topnav-title">YKS Hazırlık Planı</span>
+  <div class="tab-group">
+    <button class="tab-btn active" onclick="switchTab('student')">Öğrenci</button>
+    <button class="tab-btn" onclick="switchTab('parent')">Ebeveyn</button>
+    <button class="tab-btn" onclick="switchTab('control')">Günlük Kontrol</button>
+    <button class="tab-btn" onclick="switchTab('calendar')">📅 Takvim</button>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- ===================== STUDENT VIEW ===================== -->
+<div class="view active" id="view-student">
+
+  <div class="hero">
+    <h1>Senin Planın</h1>
+    <p>10 Haziran 2026 — Eylül 2026 · YKS Hazırlık</p>
+  </div>
+
+  <p class="sub" style="margin-bottom:28px;">
+    Bu plan seni sıfırdan günde <strong style="color:var(--accent)">5–6 saate</strong> taşıyacak. Birden olmaz — ama adım adım olur. Her faz bir öncekinin üzerine inşa ediliyor.
+  </p>
+
+  <!-- OKUL DÖNEMİ -->
+  <div class="phase okul open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Okul Dönemi</span>
+      <span class="phase-title">Zemin Hazırlama</span>
+      <span class="phase-meta">10 – 26 Haziran</span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <p class="sub">Okul var, eve 17:20'de geliyorsun. Bu dönemde ders çalışmak zorunda değilsin. Tek görev: uyku düzeni ve küçük alışkanlıklar.</p>
+
+      <div class="week-label">Hafta 1 — Uyku ve Beden (10–16 Haziran)</div>
+      <div class="items">
+        <div class="item"><span class="item-icon">🌙</span><div><strong>Her gece 23:00'da telefon odadan çıkar</strong><span>Şarj aleti de. Yatış 23:30.</span></div></div>
+        <div class="item"><span class="item-icon">⏰</span><div><strong>07:30 kalkış — değişmez</strong><span>Zaten okul için kalkıyorsun. Hafta sonu da 08:30'dan geç kalkma.</span></div></div>
+        <div class="item"><span class="item-icon">🚶</span><div><strong>Eve gelince 20 dakika dışarı çık</strong><span>Yürüyüş, bisiklet, fark etmez. Direkt yatağa gitme.</span></div></div>
+        <div class="item"><span class="item-icon">📵</span><div><strong>Eve gelince 1 saat telefon yok</strong><span>17:20–18:20 arası. Yemek ye, hava al.</span></div></div>
+      </div>
+
+      <div class="week-label">Hafta 2 — İlk Masa Teması (17–26 Haziran)</div>
+      <div class="items">
+        <div class="item"><span class="item-icon">🪑</span><div><strong>Eve gelince 19:00–19:45 çalışma odası</strong><span>45 dakika. Ne çalışacağını bilmesen de masaya otur.</span></div></div>
+        <div class="item"><span class="item-icon">📖</span><div><strong>İstediğin dersten 1 konu</strong><span>Bitirmek zorunda değilsin. Başlamak yeterli.</span></div></div>
+        <div class="item"><span class="item-icon">✅</span><div><strong>Yaptıysan bir yere işaret koy</strong><span>Küçük bir defter, basit bir liste. Görmek motivasyon verir.</span></div></div>
+      </div>
+
+      <div class="alert info" style="margin-top:16px;">
+        <strong>Bu dönemde başarı nedir?</strong>
+        Uyku düzenliyse, eve gelince yatağa gitmiyorsan, haftada 4–5 gün masaya oturduysan — bu dönem başarılı geçti. Başka beklenti yok.
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 1 -->
+  <div class="phase faz1">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Faz 1</span>
+      <span class="phase-title">Düzen Oturuyor</span>
+      <span class="phase-meta">26 Haz – 13 Tem · Hafta 1–2</span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <p class="sub">Okul bitti. Artık tam gün seninsin. Hedef: günde 2–3 saat net çalışma. Yavaş başla, tutarlı ol.</p>
+
+      <div class="week-label">Günlük Program</div>
+      <table class="sch">
+        <tr><td class="t">08:00</td><td class="a">Kalkış, kahvaltı</td><td class="n">Telefon yok ilk 30 dk</td></tr>
+        <tr class="highlight"><td class="t">09:00–10:30</td><td class="a">📚 1. Çalışma Bloğu</td><td class="n">90 dk · istediğin ders</td></tr>
+        <tr><td class="t">10:30–10:45</td><td class="a">Mola</td><td class="n">Kalk, su iç, pencereden bak</td></tr>
+        <tr class="highlight"><td class="t">10:45–12:00</td><td class="a">📚 2. Çalışma Bloğu</td><td class="n">75 dk · farklı ders</td></tr>
+        <tr><td class="t">12:00–15:00</td><td class="a">Öğle molası</td><td class="n">Telefon bu saatte serbest</td></tr>
+        <tr><td class="t">15:00–15:45</td><td class="a">Yürüyüş / dışarı</td><td class="n">Zorunlu. Atlanmaz.</td></tr>
+        <tr><td class="t">20:00–23:00</td><td class="a">Serbest</td><td class="n">Akşam molası</td></tr>
+        <tr><td class="t">23:00</td><td class="a">Telefon odadan çıkar</td><td class="n"></td></tr>
+        <tr><td class="t">23:30</td><td class="a">Uyku</td><td class="n"></td></tr>
+      </table>
+
+      <div class="week-label" style="margin-top:20px;">Bu Fazda Hedefler</div>
+      <div class="items">
+        <div class="item"><span class="item-icon">🎯</span><div><strong>Günde 2.5 saat net çalışma</strong><span>Oturduğun süre değil, gerçekten baktığın süre.</span></div></div>
+        <div class="item"><span class="item-icon">😴</span><div><strong>Sabah başı ağrısız kalkıyor olmak</strong><span>Bu olursa uyku düzeldi demektir.</span></div></div>
+        <div class="item"><span class="item-icon">📵</span><div><strong>Öğleden önce telefon yok</strong><span>Telefon 12:00'dan önce çalışma odasına girmiyor.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 2 -->
+  <div class="phase faz2">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Faz 2</span>
+      <span class="phase-title">Tempo Artıyor</span>
+      <span class="phase-meta">14 Tem – 3 Ağu · Hafta 3–5</span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <p class="sub">Artık ritim var. Şimdi ağırlaştırıyoruz. Hedef: günde 4 saat net çalışma.</p>
+
+      <div class="week-label">Günlük Program</div>
+      <table class="sch">
+        <tr><td class="t">08:00</td><td class="a">Kalkış</td><td class="n"></td></tr>
+        <tr class="highlight"><td class="t">09:00–10:45</td><td class="a">📚 1. Blok</td><td class="n">105 dk</td></tr>
+        <tr><td class="t">10:45–11:00</td><td class="a">Mola</td><td class="n"></td></tr>
+        <tr class="highlight"><td class="t">11:00–12:30</td><td class="a">📚 2. Blok</td><td class="n">90 dk</td></tr>
+        <tr><td class="t">12:30–14:30</td><td class="a">Öğle molası</td><td class="n">Telefon bu saatte serbest</td></tr>
+        <tr><td class="t">14:30–15:00</td><td class="a">Yürüyüş</td><td class="n">Zorunlu</td></tr>
+        <tr class="highlight"><td class="t">15:00–16:15</td><td class="a">📚 3. Blok</td><td class="n">75 dk</td></tr>
+        <tr><td class="t">20:00–23:00</td><td class="a">Serbest</td><td class="n"></td></tr>
+        <tr><td class="t">23:00</td><td class="a">Telefon odadan çıkar</td><td class="n"></td></tr>
+      </table>
+
+      <div class="week-label" style="margin-top:20px;">Yeni Eklenenler</div>
+      <div class="items">
+        <div class="item"><span class="item-icon">📋</span><div><strong>Haftalık konu listesi</strong><span>Her Pazar akşamı o haftanın konularını yaz.</span></div></div>
+        <div class="item"><span class="item-icon">📝</span><div><strong>Günlük 2 cümle not</strong><span>Akşam: bugün ne yaptım, yarın ne yapacağım.</span></div></div>
+        <div class="item"><span class="item-icon">📊</span><div><strong>Haftada 1 deneme</strong><span>Cumartesi. Sonuca değil, süreye bak.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 3 -->
+  <div class="phase faz3">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Faz 3</span>
+      <span class="phase-title">Makine Modu</span>
+      <span class="phase-meta">4 Ağu – 24 Ağu · Hafta 6–8</span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <p class="sub">Hedef: günde 5–6 saat. Artık konu takibi ve deneme analizi var.</p>
+
+      <div class="week-label">Günlük Program</div>
+      <table class="sch">
+        <tr><td class="t">07:30</td><td class="a">Kalkış</td><td class="n">Okul ritmine yaklaşıyoruz</td></tr>
+        <tr class="highlight"><td class="t">08:30–10:15</td><td class="a">📚 1. Blok</td><td class="n">105 dk</td></tr>
+        <tr><td class="t">10:15–10:30</td><td class="a">Mola</td><td class="n"></td></tr>
+        <tr class="highlight"><td class="t">10:30–12:00</td><td class="a">📚 2. Blok</td><td class="n">90 dk</td></tr>
+        <tr><td class="t">12:00–14:00</td><td class="a">Öğle molası</td><td class="n">Telefon serbest</td></tr>
+        <tr><td class="t">14:00–14:30</td><td class="a">Yürüyüş</td><td class="n"></td></tr>
+        <tr class="highlight"><td class="t">14:30–16:00</td><td class="a">📚 3. Blok</td><td class="n">90 dk</td></tr>
+        <tr><td class="t">16:00–16:15</td><td class="a">Mola</td><td class="n"></td></tr>
+        <tr class="highlight"><td class="t">16:15–17:15</td><td class="a">📚 4. Blok</td><td class="n">60 dk · soru çözme</td></tr>
+        <tr><td class="t">20:30–23:00</td><td class="a">Serbest</td><td class="n"></td></tr>
+        <tr><td class="t">23:00</td><td class="a">Telefon odadan çıkar</td><td class="n"></td></tr>
+      </table>
+
+      <div class="week-label" style="margin-top:20px;">Bu Fazda Eklenenler</div>
+      <div class="items">
+        <div class="item"><span class="item-icon">🔍</span><div><strong>Deneme analizi zorunlu</strong><span>Her denemeden sonra hata defteri. Neyi yanlış yaptın, neden?</span></div></div>
+        <div class="item"><span class="item-icon">🔁</span><div><strong>Zayıf konulara geri dön</strong><span>Deneme sonuçlarına göre haftanın 1 günü sadece tekrar.</span></div></div>
+        <div class="item"><span class="item-icon">📊</span><div><strong>Haftada 2 deneme</strong><span>Biri TYT, biri AYT. Cumartesi ve Çarşamba.</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 4 -->
+  <div class="phase faz4">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Faz 4</span>
+      <span class="phase-title">Okul Öncesi Son Sprint</span>
+      <span class="phase-meta">25 Ağu – Eylül 2. Hafta · Hafta 9–12</span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <p class="sub">Okul açılıyor. Son 2–3 haftada ritmi okul düzenine yaklaştır. Ama çalışmayı bırakma.</p>
+
+      <div class="week-label">Günlük Program</div>
+      <table class="sch">
+        <tr><td class="t">07:00</td><td class="a">Kalkış</td><td class="n">Okul ritmi başlıyor</td></tr>
+        <tr class="highlight"><td class="t">08:00–09:45</td><td class="a">📚 1. Blok</td><td class="n">105 dk</td></tr>
+        <tr><td class="t">09:45–10:00</td><td class="a">Mola</td><td class="n"></td></tr>
+        <tr class="highlight"><td class="t">10:00–11:30</td><td class="a">📚 2. Blok</td><td class="n">90 dk</td></tr>
+        <tr><td class="t">11:30–13:30</td><td class="a">Öğle molası</td><td class="n"></td></tr>
+        <tr><td class="t">13:30–14:00</td><td class="a">Yürüyüş</td><td class="n"></td></tr>
+        <tr class="highlight"><td class="t">14:00–15:30</td><td class="a">📚 3. Blok</td><td class="n">90 dk</td></tr>
+        <tr><td class="t">15:30–15:45</td><td class="a">Mola</td><td class="n"></td></tr>
+        <tr class="highlight"><td class="t">15:45–17:00</td><td class="a">📚 4. Blok</td><td class="n">75 dk</td></tr>
+        <tr><td class="t">20:00–21:30</td><td class="a">Serbest</td><td class="n"></td></tr>
+        <tr><td class="t">22:30</td><td class="a">Telefon odadan çıkar</td><td class="n">Okul için 23:00 yatış</td></tr>
+      </table>
+
+      <div class="alert info" style="margin-top:16px;">
+        <strong>Okul açılınca ne olur?</strong>
+        Okul günleri akşam 1–1.5 saat çalışma yeterli. Asıl yük hafta sonlarına kayar. Bu ritmi yazdan oturtmak için bu fazdasın.
+      </div>
+    </div>
+  </div>
+
+  <!-- RULES -->
+  <div class="stitle">Değişmez Kurallar</div>
+  <div class="rules">
+    <div class="rule r">📵 <strong>Çalışma saatinde telefon başka odada.</strong> Yanında olursa kullanırsın — bu tartışmasız.</div>
+    <div class="rule g">🛏️ <strong>Yatakta çalışma, çalışma odasında yatma.</strong> Her yerin tek bir görevi var.</div>
+    <div class="rule b">⏱️ <strong>Program bitince dur.</strong> "Biraz daha" deme — tükenirsen yarın da çalışamazsın.</div>
+    <div class="rule gr">🚶 <strong>Her gün dışarı çık.</strong> 20–30 dakika. Bu müzakere konusu değil.</div>
+    <div class="rule g">😮‍💨 <strong>Kötü günler olacak.</strong> O gün sıfırla, ertesi gün devam et. Plan bitmedi.</div>
+    <div class="rule r">🧠 <strong>Kendini geçmişle kıyaslama.</strong> "Eskiden daha iyiydim" düşüncesi seni felç eder. Dün değil, bugün.</div>
+  </div>
+
+  <!-- PROGRESS SUMMARY -->
+  <div class="stitle">Faz Hedefleri</div>
+  <div class="goals">
+    <div class="goal-row"><span class="gl">Okul dönemi sonu (26 Haz)</span><span class="gv">Uyku düzeni yerleşmiş</span></div>
+    <div class="goal-row"><span class="gl">Faz 1 sonu (13 Tem)</span><span class="gv">Günde 2.5 saat</span></div>
+    <div class="goal-row"><span class="gl">Faz 2 sonu (3 Ağu)</span><span class="gv">Günde 4 saat</span></div>
+    <div class="goal-row"><span class="gl">Faz 3 sonu (24 Ağu)</span><span class="gv">Günde 5–6 saat</span></div>
+    <div class="goal-row"><span class="gl">Okul açılışı</span><span class="gv">Ritim oturmuş, okula hazır</span></div>
+  </div>
+
+</div>
+
+<!-- ===================== PARENT VIEW ===================== -->
+<div class="view" id="view-parent">
+
+  <div class="hero">
+    <h1>Ebeveyn Rehberi</h1>
+    <p>Ne zaman müdahale et, ne zaman geri çekil</p>
+  </div>
+
+  <p class="sub" style="margin-bottom:28px;">
+    Sizin rolünüz denetçi değil <strong style="color:var(--accent)">zemin tutucu.</strong> Bu plan oğlunuzun iradesiyle değil, sizin tutarlılığınızla ayakta kalır — özellikle ilk 4 hafta.
+  </p>
+
+  <!-- OKUL -->
+  <div class="phase okul open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Okul Dönemi</span>
+      <span class="phase-title">10–26 Haziran: Yapıyı Siz Kurun</span>
+      <span class="phase-meta"></span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="rules">
+        <div class="rule r">Gece 23:00'da telefonu fiziksel olarak alın. "Bırak artık" değil, "al şarj ediyorum" şeklinde. Tartışmadan.</div>
+        <div class="rule g">Hafta sonu 08:30'dan geç uyutmayın. Kendi kalkamaz ilk haftalarda — bu normal, alışkanlık bozukluğu.</div>
+        <div class="rule b">Eve gelince yürüyüşe siz de çıkın. "Gel seninle çıkayım" zorlamadan çok daha işe yarar.</div>
+        <div class="rule gr">Bu dönemde ders çalışmadıysa eleştirmeyin. Masaya oturdu mu? Bu yeterli başarı.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 1 -->
+  <div class="phase faz1">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Faz 1</span>
+      <span class="phase-title">26 Haz – 13 Tem: Takip Et, Baskı Yapma</span>
+      <span class="phase-meta"></span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="rules">
+        <div class="rule g">Her akşam tek soru: <em>"Bugün masaya oturdun mu?"</em> — ne yaptığı değil, oturdu mu.</div>
+        <div class="rule b">Oturdu mu? Güzel, geç. Oturmadı mı? "Yarın deneyelim" deyin, tartışmayın.</div>
+        <div class="rule r">Sonuç karşılaştırması yapmayın. "Eskiden böyle değildin" bu fazın en zararlı cümlesi.</div>
+        <div class="rule gr">Küçük başarıları fark edin. "3 gün üst üste oturdun, iyi" yeterli bir takdir.</div>
+        <div class="rule g">Öğleden önce odaya girip girmediğini kontrol edin. Günlük Kontrol sekmesini kullanın.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 2 -->
+  <div class="phase faz2">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Faz 2</span>
+      <span class="phase-title">14 Tem – 3 Ağu: Yavaş Geri Çekilin</span>
+      <span class="phase-meta"></span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="rules">
+        <div class="rule b">Günlük takip azalır. Sabah bir bakış yeterli — odaya girdi mi, telefon dışarıda mı?</div>
+        <div class="rule g">Haftalık konu listesini yapıyor mu diye sorun. Yapıyorsa karışmayın.</div>
+        <div class="rule gr">Bu fazda ilk büyük çöküş olabilir. Bir hafta kötü geçerse paniklemeyip "sıfırlayalım" deyin.</div>
+        <div class="rule r">Deneme sonuçlarını sormayın. "Nasıl hissettin?" daha değerli bir soru.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 3 -->
+  <div class="phase faz3">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Faz 3</span>
+      <span class="phase-title">4 Ağu – 24 Ağu: Gözlemleyin</span>
+      <span class="phase-meta"></span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="rules">
+        <div class="rule b">Artık plan büyük ölçüde oğlunuzun elinde. Günlük müdahale minimuma iner.</div>
+        <div class="rule g">Haftada bir konuşun: "Bu hafta nasıl gitti, zor olan ne oldu?"</div>
+        <div class="rule gr">Eğer bu fazda hala Faz 1 davranışları varsa — hiç çalışamıyor, enerji yok — doktor konuşmasını açın.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAZ 4 -->
+  <div class="phase faz4">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <span class="phase-badge">Faz 4</span>
+      <span class="phase-title">25 Ağu – Eylül: Serbest Bırakın</span>
+      <span class="phase-meta"></span>
+      <span class="phase-chevron">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="rules">
+        <div class="rule gr">Bu noktada müdahaleniz neredeyse sıfır olmalı. O artık kendi planını yönetiyor.</div>
+        <div class="rule b">Okul açılınca akşam çalışıp çalışmadığını sorun — ama baskı yapmayın.</div>
+        <div class="rule g">Hafta sonu çalışmasına destek olun: sessiz ev, hazır yemek, rahat ortam.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle">Ne Zaman Endişelenin</div>
+  <div class="alert warn">
+    <strong>⚠️ Bu işaretleri görürseniz doktor konuşmasını açın:</strong>
+    → 4. haftaya gelindi ama hala hiç masaya oturamıyor<br>
+    → Uyku düzeni hiç yerleşmedi, hala yorgun ve başı ağrıyor<br>
+    → Ruh hali giderek kötüleşiyor, daha içe kapanıyor<br>
+    → "Ne anlamı var" gibi düşünceler başladı<br><br>
+    Bu işaretler irade sorunu değil — tıbbi müdahale gerektirir. Plan o zaman yeterli olmaz.
+  </div>
+
+  <div class="stitle">Ebeveyn Özet Tablosu</div>
+  <div class="goals">
+    <div class="goal-row"><span class="gl">Okul dönemi</span><span class="gv">Telefon al, uyandır, yürüyüşe çık</span></div>
+    <div class="goal-row"><span class="gl">Faz 1 (2 hafta)</span><span class="gv">Günlük "oturdun mu?" sorusu</span></div>
+    <div class="goal-row"><span class="gl">Faz 2 (3 hafta)</span><span class="gv">Sabah kontrol, haftalık sohbet</span></div>
+    <div class="goal-row"><span class="gl">Faz 3 (3 hafta)</span><span class="gv">Gözlemle, karışma</span></div>
+    <div class="goal-row"><span class="gl">Faz 4 (son)</span><span class="gv">Destek ver, serbest bırak</span></div>
+  </div>
+
+</div>
+
+<!-- ===================== CONTROL VIEW ===================== -->
+<div class="view" id="view-control">
+
+  <div class="hero">
+    <h1>Günlük Kontrol</h1>
+    <p>Her gün bu sekmeyi açın, işaretleyin</p>
+  </div>
+
+  <p class="sub" style="margin-bottom:24px;">Hangi fazdasınız seçin:</p>
+
+  <div class="phase-select">
+    <button class="ps-btn active" onclick="selectPhase('okul', this)">Okul Dönemi</button>
+    <button class="ps-btn" onclick="selectPhase('faz1', this)">Faz 1</button>
+    <button class="ps-btn" onclick="selectPhase('faz2', this)">Faz 2</button>
+    <button class="ps-btn" onclick="selectPhase('faz3', this)">Faz 3</button>
+    <button class="ps-btn" onclick="selectPhase('faz4', this)">Faz 4</button>
+  </div>
+
+  <!-- OKUL CHECKLIST -->
+  <div class="checklist-section active" id="cl-okul">
+    <div class="control-card">
+      <h3>🌅 Sabah Kontrol</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">07:30'da kalktı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">Kahvaltı yaptı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">Okula giderken enerjili görünüyor mu?</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>🌆 Akşam Kontrol (17:20 sonrası)</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">Eve gelince direkt yatağa gitmedi mi?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">Dışarı çıktı mı? (20 dk yürüyüş)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">19:00–19:45 masaya oturdu mu?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">23:00'da telefon alındı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">23:30'da yatıyor mu?</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>📝 Günlük Not</h3>
+      <textarea style="width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:7px; padding:12px; color:var(--text); font-family:'Source Sans 3',sans-serif; font-size:0.88rem; resize:vertical; min-height:80px; outline:none;" placeholder="Bugün nasıl gitti? Sorun var mıydı?"></textarea>
+    </div>
+    <button class="reset-btn" onclick="resetChecks()">Günü Sıfırla</button>
+    <button class="save-btn" onclick="saveDay()">💾 Bugünü Kaydet</button>
+    <span class="save-notice" id="save-notice">Kaydedildi ✓</span>
+  </div>
+
+  <!-- FAZ 1 CHECKLIST -->
+  <div class="checklist-section" id="cl-faz1">
+    <div class="control-card">
+      <h3>🌅 Sabah Kontrol</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">08:00'de kalktı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">Telefon sabah masasına gitmeden önce odada mı kaldı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">09:00'da çalışma odasına girdi mi?</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>☀️ Öğleden Önce</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">1. blok tamamlandı mı? (09:00–10:30)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">2. blok tamamlandı mı? (10:45–12:00)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">Öğleden önce telefon çalışma odasına girmedi mi?</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>🌆 Öğleden Sonra</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">15:00–15:45 dışarı çıktı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">23:00'da telefon alındı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">23:30'da yatıyor mu?</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>📝 Günlük Not</h3>
+      <textarea style="width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:7px; padding:12px; color:var(--text); font-family:'Source Sans 3',sans-serif; font-size:0.88rem; resize:vertical; min-height:80px; outline:none;" placeholder="Bugün kaç saat çalıştı? Sorun var mıydı?"></textarea>
+    </div>
+    <button class="reset-btn" onclick="resetChecks()">Günü Sıfırla</button>
+    <button class="save-btn" onclick="saveDay()">💾 Bugünü Kaydet</button>
+    <span class="save-notice" id="save-notice">Kaydedildi ✓</span>
+  </div>
+
+  <!-- FAZ 2 CHECKLIST -->
+  <div class="checklist-section" id="cl-faz2">
+    <div class="control-card">
+      <h3>🌅 Sabah Kontrol</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">08:00'de kalktı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">09:00'da odaya girdi mi?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">1. blok tamamlandı mı? (09:00–10:45)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">2. blok tamamlandı mı? (11:00–12:30)</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>🌆 Öğleden Sonra</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">14:30–15:00 dışarı çıktı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">3. blok tamamlandı mı? (15:00–16:15)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">Günlük 2 cümle notunu yazdı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">Cumartesiyse deneme yaptı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">23:00'da telefon alındı mı?</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>📝 Günlük Not</h3>
+      <textarea style="width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:7px; padding:12px; color:var(--text); font-family:'Source Sans 3',sans-serif; font-size:0.88rem; resize:vertical; min-height:80px; outline:none;" placeholder="Bugün kaç saat çalıştı? Hangi blok atlandı?"></textarea>
+    </div>
+    <button class="reset-btn" onclick="resetChecks()">Günü Sıfırla</button>
+    <button class="save-btn" onclick="saveDay()">💾 Bugünü Kaydet</button>
+    <span class="save-notice">Kaydedildi ✓</span>
+  </div>
+
+  <!-- FAZ 3 CHECKLIST -->
+  <div class="checklist-section" id="cl-faz3">
+    <div class="control-card">
+      <h3>🌅 Sabah Kontrol</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">07:30'da kalktı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">08:30'da odaya girdi mi?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">1. blok tamamlandı mı? (08:30–10:15)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">2. blok tamamlandı mı? (10:30–12:00)</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>🌆 Öğleden Sonra</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">14:00–14:30 dışarı çıktı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">3. blok tamamlandı mı? (14:30–16:00)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">4. blok tamamlandı mı? (16:15–17:15)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">Deneme haftasıysa analiz yapıldı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">23:00'da telefon alındı mı?</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>📝 Günlük Not</h3>
+      <textarea style="width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:7px; padding:12px; color:var(--text); font-family:'Source Sans 3',sans-serif; font-size:0.88rem; resize:vertical; min-height:80px; outline:none;" placeholder="Bugün kaç saat net çalıştı? Sorun var mıydı?"></textarea>
+    </div>
+    <button class="reset-btn" onclick="resetChecks()">Günü Sıfırla</button>
+    <button class="save-btn" onclick="saveDay()">💾 Bugünü Kaydet</button>
+    <span class="save-notice">Kaydedildi ✓</span>
+  </div>
+
+  <!-- FAZ 4 CHECKLIST -->
+  <div class="checklist-section" id="cl-faz4">
+    <div class="control-card">
+      <h3>🌅 Sabah Kontrol</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">07:00'de kalktı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">08:00'da odaya girdi mi?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">1. blok tamamlandı mı? (08:00–09:45)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">2. blok tamamlandı mı? (10:00–11:30)</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>🌆 Öğleden Sonra</h3>
+      <div class="checklist">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">13:30–14:00 dışarı çıktı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">3. blok tamamlandı mı? (14:00–15:30)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">4. blok tamamlandı mı? (15:45–17:00)</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">22:30'da telefon alındı mı?</span></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box">✓</div><span class="check-text">23:00'da yatıyor mu?</span></div>
+      </div>
+    </div>
+    <div class="control-card">
+      <h3>📝 Günlük Not</h3>
+      <textarea style="width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:7px; padding:12px; color:var(--text); font-family:'Source Sans 3',sans-serif; font-size:0.88rem; resize:vertical; min-height:80px; outline:none;" placeholder="Bugün kaç saat net çalıştı? Okul ritmine hazır mı?"></textarea>
+    </div>
+    <button class="reset-btn" onclick="resetChecks()">Günü Sıfırla</button>
+  </div>
+
+</div>
+
+</div><!-- /main -->
+
+<!-- CALENDAR VIEW -->
+<div class="view" id="view-calendar">
+<div class="main">
+  <div class="hero">
+    <h1>Takip Takvimi</h1>
+    <p>Geçmiş günlerin kaydı — hangi günler tamamlandı, hangileri atlandı</p>
+  </div>
+
+  <div class="cal-legend">
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--accent3)"></div> Tüm görevler yapıldı</div>
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--accent)"></div> Kısmi tamamlandı</div>
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--danger)"></div> Kaydedildi ama boş</div>
+    <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--muted)"></div> Kayıt yok</div>
+  </div>
+
+  <div class="cal-header">
+    <button class="cal-nav-btn" onclick="calPrev()">← Önceki</button>
+    <span class="cal-month-title" id="cal-month-label"></span>
+    <button class="cal-nav-btn" onclick="calNext()">Sonraki →</button>
+  </div>
+  <div class="cal-grid" id="cal-grid"></div>
+</div>
+</div>
+
+<!-- DAY DETAIL MODAL -->
+<div class="modal-overlay" id="day-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modal-title"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+  // ── TAB & PHASE NAVIGATION ──────────────────────────────
+  function switchTab(t) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('view-' + t).classList.add('active');
+    event.target.classList.add('active');
+    if (t === 'calendar') renderCalendar();
+  }
+
+  function togglePhase(header) {
+    header.parentElement.classList.toggle('open');
+  }
+
+  function toggleCheck(item) {
+    item.classList.toggle('checked');
+  }
+
+  function resetChecks() {
+    const active = document.querySelector('.checklist-section.active');
+    if (active) {
+      active.querySelectorAll('.check-item').forEach(i => i.classList.remove('checked'));
+      active.querySelectorAll('textarea').forEach(t => t.value = '');
+    }
+  }
+
+  function selectPhase(phase, btn) {
+    document.querySelectorAll('.checklist-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.ps-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('cl-' + phase).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ── SAVE / LOAD ─────────────────────────────────────────
+  function todayKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+
+  function saveDay() {
+    const activeSection = document.querySelector('.checklist-section.active');
+    if (!activeSection) return;
+
+    // Collect phase name
+    const phaseBtn = document.querySelector('.ps-btn.active');
+    const phaseName = phaseBtn ? phaseBtn.textContent.trim() : '?';
+
+    // Collect checks
+    const checks = [];
+    activeSection.querySelectorAll('.check-item').forEach(item => {
+      checks.push({
+        text: item.querySelector('.check-text').textContent,
+        done: item.classList.contains('checked')
+      });
+    });
+
+    // Collect note
+    const textarea = activeSection.querySelector('textarea');
+    const note = textarea ? textarea.value : '';
+
+    const total = checks.length;
+    const done = checks.filter(c => c.done).length;
+
+    const key = 'yks_day_' + todayKey();
+    const data = { date: todayKey(), phase: phaseName, checks, note, total, done };
+    localStorage.setItem(key, JSON.stringify(data));
+
+    // Show confirmation
+    const notices = document.querySelectorAll('.save-notice');
+    notices.forEach(n => {
+      n.classList.add('show');
+      setTimeout(() => n.classList.remove('show'), 2500);
+    });
+  }
+
+  function loadToday() {
+    const key = 'yks_day_' + todayKey();
+    const raw = localStorage.getItem(key);
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      // Restore active phase
+      const phaseMap = { 'Okul Dönemi': 'okul', 'Faz 1': 'faz1', 'Faz 2': 'faz2', 'Faz 3': 'faz3', 'Faz 4': 'faz4' };
+      const phaseId = phaseMap[data.phase];
+      if (phaseId) {
+        const btn = document.querySelector(`.ps-btn[onclick*="${phaseId}"]`);
+        if (btn) selectPhase(phaseId, btn);
+      }
+      // Restore checks
+      const activeSection = document.querySelector('.checklist-section.active');
+      if (activeSection) {
+        const items = activeSection.querySelectorAll('.check-item');
+        data.checks.forEach((c, i) => {
+          if (items[i] && c.done) items[i].classList.add('checked');
+        });
+        const textarea = activeSection.querySelector('textarea');
+        if (textarea && data.note) textarea.value = data.note;
+      }
+    } catch(e) {}
+  }
+
+  // ── CALENDAR ────────────────────────────────────────────
+  let calYear, calMonth;
+
+  function initCal() {
+    const now = new Date();
+    calYear = now.getFullYear();
+    calMonth = now.getMonth();
+  }
+
+  function calPrev() {
+    calMonth--;
+    if (calMonth < 0) { calMonth = 11; calYear--; }
+    renderCalendar();
+  }
+
+  function calNext() {
+    calMonth++;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const monthNames = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+    document.getElementById('cal-month-label').textContent = monthNames[calMonth] + ' ' + calYear;
+
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+
+    const dayLabels = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+    dayLabels.forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'cal-day-label';
+      el.textContent = d;
+      grid.appendChild(el);
+    });
+
+    const firstDay = new Date(calYear, calMonth, 1);
+    // Monday-based offset
+    let startOffset = firstDay.getDay() - 1;
+    if (startOffset < 0) startOffset = 6;
+
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const today = new Date();
+
+    for (let i = 0; i < startOffset; i++) {
+      const empty = document.createElement('div');
+      empty.className = 'cal-cell empty';
+      grid.appendChild(empty);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'cal-cell';
+
+      const dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      const isToday = (today.getFullYear() === calYear && today.getMonth() === calMonth && today.getDate() === d);
+      if (isToday) cell.classList.add('today');
+
+      const num = document.createElement('div');
+      num.className = 'cal-num';
+      num.textContent = d;
+      cell.appendChild(num);
+
+      // Check saved data
+      const raw = localStorage.getItem('yks_day_' + dateStr);
+      if (raw) {
+        try {
+          const data = JSON.parse(raw);
+          const dots = document.createElement('div');
+          dots.className = 'cal-dots';
+          const numDots = Math.min(data.total, 5);
+          for (let k = 0; k < numDots; k++) {
+            const dot = document.createElement('div');
+            dot.className = 'cal-dot';
+            dots.appendChild(dot);
+          }
+          cell.appendChild(dots);
+
+          const ratio = data.total > 0 ? data.done / data.total : 0;
+          if (ratio === 1) cell.classList.add('done-full');
+          else if (ratio > 0) cell.classList.add('done-partial');
+          else cell.classList.add('done-none');
+
+          cell.onclick = () => openModal(dateStr, data);
+        } catch(e) {}
+      } else {
+        cell.style.opacity = isToday ? '1' : '0.5';
+      }
+
+      grid.appendChild(cell);
+    }
+  }
+
+  function openModal(dateStr, data) {
+    const modal = document.getElementById('day-modal');
+    const title = document.getElementById('modal-title');
+    const body = document.getElementById('modal-body');
+
+    const [y,m,d] = dateStr.split('-');
+    const monthNames = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+    title.textContent = d + ' ' + monthNames[parseInt(m)-1] + ' ' + y + ' — ' + data.phase;
+
+    body.innerHTML = '';
+
+    const summary = document.createElement('div');
+    summary.style.cssText = 'font-size:0.82rem;color:var(--muted);margin-bottom:14px;';
+    const ratio = data.total > 0 ? Math.round(data.done/data.total*100) : 0;
+    summary.textContent = data.done + '/' + data.total + ' görev tamamlandı (' + ratio + '%)';
+    body.appendChild(summary);
+
+    data.checks.forEach(c => {
+      const item = document.createElement('div');
+      item.className = 'modal-item';
+      item.innerHTML = `<span class="modal-check">${c.done ? '✅' : '⬜'}</span><span style="color:${c.done ? 'var(--text)' : 'var(--muted)'};${c.done ? '' : 'text-decoration:line-through'}">${c.text}</span>`;
+      body.appendChild(item);
+    });
+
+    if (data.note && data.note.trim()) {
+      const noteEl = document.createElement('div');
+      noteEl.className = 'modal-note';
+      noteEl.innerHTML = '<strong style="color:var(--accent);font-size:0.8rem;display:block;margin-bottom:6px;">📝 Not</strong>' + data.note.replace(/\n/g, '<br>');
+      body.appendChild(noteEl);
+    }
+
+    modal.classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('day-modal').classList.remove('open');
+  }
+
+  document.getElementById('day-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ── INIT ────────────────────────────────────────────────
+  initCal();
+  loadToday();
+</script>
+</body>
+</html>
